@@ -4,6 +4,9 @@ const express = require("express")
 
 const app = express();
 
+// middleware untuk membaca json dari request body ke kita 
+app.use(express. json())
+
 // default URL = Health Check
 app.get("/", (req, res) => {
     res.status(200).json({
@@ -29,7 +32,32 @@ app.get('/api/v1/cars', (req, res) => {
         status : "Succes",
         message: "Succes get cars data",
         isSucces: true,
+        totalData: cars.length,
+        data: {
+            cars
+        },
+    });
+});
+
+// response.data.cars
+
+app.post('/api/v1/cars', (req, res) => {
+    // insert into ....
+
+    const newCar = req.body;
+
+    cars.push(newCar);
+
+    fs.writeFileSync(`${__dirname}/data/cars.json`, cars, (err) => {
+        
+    cars.status(200).json({
+        status : "Succes",
+        message: "Succes get cars data",
+        isSucces: true,
         data: cars,
+    });
+
+   
     });
 });
 
